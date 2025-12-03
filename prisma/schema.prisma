@@ -5,9 +5,19 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model doctors {
+  doctor_id     String   @id @default(uuid())
+  name           String
+  email          String?  @unique
+  phone          Int?
+  specialization String?
+  address        String?  @unique
+  license_number Int? 
 }

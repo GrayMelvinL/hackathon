@@ -11,3 +11,13 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model patients {
+  patients_id String @id @default(uuid())
+  name String
+  birth_date DateTime
+  gender String
+  phone Int
+  email String @unique
+  address String
+}

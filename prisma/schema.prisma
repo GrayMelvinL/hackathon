@@ -12,12 +12,75 @@ datasource db {
   provider = "postgresql"
 }
 
-model doctors {
-  doctor_id     String   @id @default(uuid())
+model Doctor {
+  id             Int    @id @default(autoincrement())
   name           String
-  email          String?  @unique
-  phone          Int?
-  specialization String?
-  address        String?  @unique
-  license_number Int? 
+  specialization String
+  phone          String
+  email          String @unique
+  licenseNumber  String
+  address        String
+
+  appointments  Appointment[]
+  prescriptions Prescription[]
+
+  createdAt DateTime @default(now())
+}
+
+model Patient {
+  id        Int      @id @default(autoincrement())
+  name      String
+  birthDate DateTime
+  gender    String
+  phone     String
+  email     String   @unique
+  address   String
+
+  appointments  Appointment[]
+  prescriptions Prescription[]
+
+  createdAt DateTime @default(now())
+}
+
+model Appointment {
+  id        Int      @id @default(autoincrement())
+  patientId Int
+  doctorId  Int
+  schedule  DateTime
+  status    String
+  notes     String?
+
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+
+  prescriptions Prescription[]
+
+  createdAt DateTime @default(now())
+}
+
+model Prescription {
+  id            Int     @id @default(autoincrement())
+  appointmentId Int
+  doctorId      Int
+  patientId     Int
+  notes         String?
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id])
+  doctor      Doctor      @relation(fields: [doctorId], references: [id])
+  patient     Patient     @relation(fields: [patientId], references: [id])
+
+  details PrescriptionDetail[]
+
+  createdAt DateTime @default(now())
+}
+
+model PrescriptionDetail {
+  id             Int    @id @default(autoincrement())
+  prescriptionId Int
+  medicineName   String
+  dosage         String
+  frequency      String
+  duration       String
+
+  prescription Prescription @relation(fields: [prescriptionId], references: [id])
 }

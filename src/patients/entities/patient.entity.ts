@@ -1,9 +1,10 @@
-export class DoctorEntity {
+export class PatientEntity {
   id: number;
   name: string;
-  specialization: string;
+  birthDate: Date;
+  gender: string;
   phone: string;
   email: string;
-  licenseNumber: string;
   address: string;
+  createdAt: Date;
 }

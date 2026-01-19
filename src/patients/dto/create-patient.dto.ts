@@ -1,20 +1,19 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-export class CreateDoctorDto {
+export class CreatePatientDto {
   @IsNotEmpty()
   name: string;
 
+  birthDate: Date;
+
   @IsNotEmpty()
-  specialization: string;
+  gender: string;
 
   @IsNotEmpty()
   phone: string;
 
   @IsEmail()
   email: string;
-
-  @IsNotEmpty()
-  licenseNumber: string;
 
   @IsNotEmpty()
   address: string;
